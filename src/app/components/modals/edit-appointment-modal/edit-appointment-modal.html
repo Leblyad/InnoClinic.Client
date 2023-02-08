@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Change date and time of appointment</h2>
+<div mat-dialog-content>
+  <p>Chose timeslot:</p>
+  <div>
+    <mat-form-field appearance="fill">
+      <input placeholder="{{data?.timeslots}}" matInput [(ngModel)]="timeslots" appearance="fill">
+    </mat-form-field>
+  </div>
+  <p>Chose date:</p>
+  <div>
+    <mat-form-field appearance="fill">
+      <input placeholder="{{data?.date | date: 'dd/MM/YYYY'}}" matInput [(ngModel)]="date" [matDatepicker]="picker">
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" [mat-dialog-close]="true">Cancel</button>
+    <button mat-raised-button color="primary" (click)="updateAppointment()" cdkFocusInitial mat-dialog-close>Save</button>
+  </div>
+</div>
