@@ -1,0 +1,70 @@
+<form class="example-form" [formGroup]="searchGroup">
+
+  <mat-grid-list cols="5" rowHeight="70px">
+    <mat-grid-tile>
+      <button mat-raised-button color="primary" class="example-button" (click)="openDialog()">Create</button>
+    </mat-grid-tile>
+
+    <!-- Patients -->
+    <mat-grid-tile [colspan]="2">
+      <mat-form-field class="top-form-field " appearance="fill">
+        <input type="text" class="top-inputs" placeholder="Select patient" aria-label="Number" matInput
+          formControlName="patientControl" [matAutocomplete]="patients">
+        <mat-autocomplete class="mat-autocomplete-panel" #patients="matAutocomplete">
+          <mat-option class="mat-option" *ngFor="let option of filteredPatients | async"
+            [value]="option.lastName + ' ' + option.firstName + ' ' + option.middleName">
+            {{option.lastName + " " + option.firstName + " " + option.middleName}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <!-- Doctors -->
+    <mat-grid-tile [colspan]="2">
+      <mat-form-field class="top-form-field " appearance="fill">
+        <input type="text" class="top-inputs" placeholder="Select doctor" aria-label="Number" matInput
+          formControlName="doctorControl" [matAutocomplete]="doctors">
+        <mat-autocomplete class="mat-autocomplete-panel" #doctors="matAutocomplete">
+          <mat-option class="mat-option" *ngFor="let option of filteredDoctors | async"
+            [value]="option.lastName + ' ' + option.firstName + ' ' + option.middleName">
+            {{option.lastName + " " + option.firstName + " " + option.middleName}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <!-- Services -->
+    <mat-grid-tile>
+      <mat-form-field appearance="fill" class="example-form-field">
+        <mat-select formControlName="serviceControl" placeholder="Select service" class="example-input">
+          <mat-option *ngFor="let service of services" [value]="service" class="mat-option">
+            {{service}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <!-- Statuses -->
+    <mat-grid-tile>
+      <mat-form-field appearance="fill" class="example-form-field">
+        <mat-select formControlName="statusControl" placeholder="Select status" class="example-input">
+          <mat-option *ngFor="let status of statuses" [value]="status.value" class="mat-option">
+            {{status.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <button mat-raised-button color="primary" class="example-button" (click)="sortData()">Filter</button>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <button mat-raised-button color="primary" class="example-button" (click)="clear()">Clear</button>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</form>

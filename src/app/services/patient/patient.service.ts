@@ -15,8 +15,6 @@ export class PatientService {
   
   getAll(): Observable<IPatient[]>
   {
-    var temp = this.http.get<IPatient[]>(Routes.profilesRoute + 'patients')
-       
-    return temp;
+    return this.http.get<IPatient[]>(Routes.profilesRoute + 'patients')
   }
 }

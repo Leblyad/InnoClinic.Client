@@ -11,6 +11,7 @@ export interface IAppointment {
     date: Date,
     timeslots: string,
     status: number,
+    statusString: string,
     serviceName: string,
     doctor: IDoctor,
     patient: IPatient

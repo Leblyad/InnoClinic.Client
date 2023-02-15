@@ -21,11 +21,15 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { EditAppointmentModalComponent } from './components/modals/edit-appointment-modal/edit-appointment-modal';
 import { CreateAppointmentModalComponent } from './components/modals/create-appointment-modal/create-appointment-modal.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { AppointmentViewControlPanelComponent } from './components/control-panels/appointment-view-control-panel/appointment-view-control-panel.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,8 @@ import { CreateAppointmentModalComponent } from './components/modals/create-appo
     ServiceViewTableComponent,
     ReceptionistPageComponent,
     EditAppointmentModalComponent,
-    CreateAppointmentModalComponent
+    CreateAppointmentModalComponent,
+    AppointmentViewControlPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +61,11 @@ import { CreateAppointmentModalComponent } from './components/modals/create-appo
     MatInputModule,
     FormsModule,
     MatDatepickerModule,
-    MatMomentDateModule 
+    MatMomentDateModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatGridListModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

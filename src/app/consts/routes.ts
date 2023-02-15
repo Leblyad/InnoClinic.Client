@@ -19,3 +19,10 @@ export const MY_FORMATS = {
         monthYearA11yLabel: 'YYYY'
     }
 };
+
+export enum AppointmentStatusEnum
+{
+    "Approve" = 0,
+    "Not approve" = 1
+}
+

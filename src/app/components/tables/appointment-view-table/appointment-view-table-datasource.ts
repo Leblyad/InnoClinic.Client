@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { IAppointment } from '../../../models/appointment';
+import { AppointmentStatusEnum } from 'src/app/consts/routes';
 
 export class AppointmentViewTableDataSource extends DataSource<IAppointment> {
   data: IAppointment[] = [];
@@ -18,6 +19,9 @@ export class AppointmentViewTableDataSource extends DataSource<IAppointment> {
   }
 
   connect(): Observable<IAppointment[]> {
+    this.data.forEach(app => {
+      app.statusString = EnumToString(app.status)
+    });
     if (this.paginator && this.sort) {
       return merge(observableOf(this.data), this.paginator.page, this.sort.sortChange)
         .pipe(map(() => {
@@ -66,4 +70,11 @@ export class AppointmentViewTableDataSource extends DataSource<IAppointment> {
 /** Simple sort comparator for example ID/Name columns (for client-side sorting). */
 function compare(a: string | number, b: string | number, isAsc: boolean): number {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
+
+function EnumToString(status: number): string {
+  if (status === AppointmentStatusEnum.Approve)
+    return AppointmentStatusEnum[AppointmentStatusEnum.Approve];
+  else
+    return AppointmentStatusEnum[AppointmentStatusEnum['Not approve']];
 }

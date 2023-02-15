@@ -4,6 +4,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { delay, Subject, takeUntil } from 'rxjs';
+import { AppointmentStatusEnum } from 'src/app/consts/routes';
+import { DataService } from 'src/app/services/data.service';
 import { IAppointment } from '../../../models/appointment';
 import { AppointmentService } from '../../../services/appointment/appointment.service';
 import { EditAppointmentModalComponent } from '../../modals/edit-appointment-modal/edit-appointment-modal';
@@ -23,7 +25,7 @@ export class AppointmentViewTableComponent implements AfterViewInit, OnInit, OnD
   ngUnsubscribe$ = new Subject();
   loading = false;
 
-  displayedColumns = [ 'patient', 'doctor', 'serviceName', 'date', 'button'];
+  displayedColumns = ['timeslot', 'date', 'doctor', 'patient', 'phone', 'serviceName', 'status', 'approve', 'button'];
 
   constructor(
     private appointmentService: AppointmentService,
@@ -43,7 +45,9 @@ export class AppointmentViewTableComponent implements AfterViewInit, OnInit, OnD
 
     this._appointmentService.getAll().pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe(res => {
-        this.dataSource = new AppointmentViewTableDataSource(res);
+        this.appointmentService.appointments$.next(res);
+        this.dataSource = new AppointmentViewTableDataSource(this.appointmentService.appointments$.value);
+        console.log(this.appointmentService.appointments$.value);
         this.ngAfterViewInit();
         this.loading = false;
       });
@@ -54,7 +58,26 @@ export class AppointmentViewTableComponent implements AfterViewInit, OnInit, OnD
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.table.dataSource = this.dataSource;
+      this._appointmentService.appointments$.subscribe(res => {
+        this.dataSource.appointment = this.dataSource.data = res;
+        this.table.dataSource = new AppointmentViewTableDataSource(res);
+        this.table.dataSource = this.dataSource;
+      })
     }
+  }
+
+  approve(appointment: IAppointment) {
+    appointment.status = AppointmentStatusEnum.Approve;
+    appointment.statusString = AppointmentStatusEnum[AppointmentStatusEnum.Approve];
+    let appForUpdate = this._appointmentService.mapToAppaointmentForUpdate(appointment);
+    this._appointmentService.update(appointment.id, appForUpdate).subscribe();
+  }
+
+  cancel(appointment: IAppointment) {
+    appointment.status = AppointmentStatusEnum['Not approve'];
+    appointment.statusString = AppointmentStatusEnum[AppointmentStatusEnum['Not approve']];
+    let appForUpdate = this._appointmentService.mapToAppaointmentForUpdate(appointment);
+    this._appointmentService.update(appointment.id, appForUpdate).subscribe();
   }
 
   ngOnDestroy(): void {
