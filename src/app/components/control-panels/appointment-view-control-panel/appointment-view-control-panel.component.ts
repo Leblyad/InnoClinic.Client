@@ -6,10 +6,9 @@ import { AppointmentStatusEnum } from 'src/app/consts/routes';
 import { IAppointment } from 'src/app/models/appointment';
 import { IDoctor } from 'src/app/models/doctor';
 import { IPatient } from 'src/app/models/patient';
-import { AppointmentService } from 'src/app/services/appointment/appointment.service';
-import { DataService } from 'src/app/services/data.service';
-import { DoctorService } from 'src/app/services/doctor/doctor.service';
-import { PatientService } from 'src/app/services/patient/patient.service';
+import { AppointmentService } from 'src/app/services/appointment.service';
+import { DoctorService } from 'src/app/services/doctor.service';
+import { PatientService } from 'src/app/services/patient.service';
 import { CreateAppointmentModalComponent } from '../../modals/create-appointment-modal/create-appointment-modal.component';
 
 @Component({
@@ -26,8 +25,14 @@ export class AppointmentViewControlPanelComponent implements OnInit {
   services: string[] = [];
 
   statuses = [
-    { value: AppointmentStatusEnum.Approve, viewValue: AppointmentStatusEnum[AppointmentStatusEnum.Approve] },
-    { value: AppointmentStatusEnum['Not approve'], viewValue: AppointmentStatusEnum[AppointmentStatusEnum['Not approve']] },
+    {
+      value: AppointmentStatusEnum.Approve,
+      viewValue: AppointmentStatusEnum[AppointmentStatusEnum.Approve]
+    },
+    {
+      value: AppointmentStatusEnum['Not approve'],
+      viewValue: AppointmentStatusEnum[AppointmentStatusEnum['Not approve']]
+    },
     { value: 'All', viewValue: 'All' }
   ];
 
@@ -56,15 +61,12 @@ export class AppointmentViewControlPanelComponent implements OnInit {
     this.FilterData();
 
     this.appointmentService.appointments$.next(this.filteredAppointments);
-
-    console.log(this.filteredAppointments);
   }
 
   ngOnInit() {
     this.appointmentService.appointments$.subscribe(res => {
       this.filteredAppointments = res
-      if(!this.isFiltered)
-      {
+      if (!this.isFiltered) {
         this.getServices(this.filteredAppointments)
       }
     })
@@ -93,11 +95,6 @@ export class AppointmentViewControlPanelComponent implements OnInit {
     let doctor = this.searchGroup.value.doctorControl;
     let status = this.searchGroup.value.statusControl;
     let service = this.searchGroup.value.serviceControl;
-
-    console.log(patient)
-    console.log(doctor)
-    console.log(status)
-    console.log(service);
 
     if (patient) {
       this.filteredAppointments = this.filteredAppointments.filter(r =>
@@ -140,7 +137,6 @@ export class AppointmentViewControlPanelComponent implements OnInit {
 
   getServices(apps: IAppointment[]) {
     this.services = [...new Set(apps.map(obj => obj.serviceName))];
-    console.log(this.services);
   }
 
   private getAllData() {
@@ -168,7 +164,6 @@ export class AppointmentViewControlPanelComponent implements OnInit {
       map(value => this._filterDoctors(value as string || '')),
     );
   }
-
 
   private _filterDoctors(value: string): IDoctor[] {
     const filterValue = value.toLowerCase();

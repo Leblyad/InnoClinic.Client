@@ -1,21 +1,120 @@
-<h2 mat-dialog-title>Это важно</h2>
+<h2 mat-dialog-title>Create appointment</h2>
+
 <div mat-dialog-content>
-  <p>Выберите время:</p>
-  <div>
-    <mat-form-field appearance="fill">
-      <input placeholder="" matInput appearance="fill">
-    </mat-form-field>
-  </div>
-  <div>
-    <mat-form-field appearance="fill">
-      <input placeholder="" matInput [matDatepicker]="picker">
-      <mat-hint>DD/MM/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-  </div>
-  <div mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Нет</button>
-    <button mat-button mat-dialog-close>Да</button>
-  </div>
+  <form class="create-form" [formGroup]="createGroup">
+
+    <mat-grid-list cols="2" rowHeight="70px">
+
+      <!-- Patients -->
+      <mat-grid-tile>
+        <mat-form-field class="top-form-field" appearance="fill">
+
+          <input type="text" class="inputs" placeholder="Select patient" aria-label="Number" matInput
+            formControlName="patientControl" [matAutocomplete]="patients">
+
+          <mat-autocomplete class="mat-autocomplete-panel" #patients="matAutocomplete" [displayWith]="displayPatient">
+            <mat-option class="mat-option" *ngFor="let patient of filteredPatients | async"
+              [value]="patient">
+              {{patient.lastName + " " + patient.firstName + " " + patient.middleName}}
+            </mat-option>
+          </mat-autocomplete>
+
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <!-- Doctors -->
+      <mat-grid-tile>
+        <mat-form-field class="top-form-field" appearance="fill">
+
+          <input type="text" class="inputs" placeholder="Select doctor" aria-label="Number" matInput
+            formControlName="doctorControl" [matAutocomplete]="doctors">
+
+          <mat-autocomplete class="mat-autocomplete-panel" #doctors="matAutocomplete" [displayWith]="displayDoctor">
+            <mat-option class="mat-option" *ngFor="let doctor of filteredDoctors | async" 
+              [value]="doctor">
+              {{doctor.lastName + " " + doctor.firstName + " " + doctor.middleName}}
+            </mat-option>
+          </mat-autocomplete>
+
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <!-- Specializations -->
+      <mat-grid-tile>
+        <mat-form-field appearance="fill" class="top-form-field">
+
+          <input type="text" class="inputs" placeholder="Select specialization" aria-label="Number" matInput
+            formControlName="specializationControl" [matAutocomplete]="specializations">
+
+          <mat-autocomplete class="mat-autocomplete-panel" #specializations="matAutocomplete" [displayWith]="displaySpec">
+            <mat-option class="mat-option" *ngFor="let spec of filteredSpecializations | async" [value]="spec">
+              {{spec.name}}
+            </mat-option>
+          </mat-autocomplete>
+
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <!-- Services -->
+      <mat-grid-tile>
+        <mat-form-field appearance="fill" class="top-form-field">
+
+          <input type="text" class="inputs" placeholder="Select service" aria-label="Number" matInput
+            formControlName="serviceControl" [matAutocomplete]="services">
+
+          <mat-autocomplete class="mat-autocomplete-panel" #services="matAutocomplete" [displayWith]="displayService">
+            <mat-option class="mat-option" *ngFor="let service of filteredServices | async" [value]="service">
+              {{service.name}}
+            </mat-option>
+          </mat-autocomplete>
+
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <!-- Offices -->
+      <mat-grid-tile>
+        <mat-form-field appearance="fill" class="top-form-field">
+
+          <mat-select formControlName="officeControl" placeholder="Select office" class="inputs">
+            <mat-option *ngFor="let office of offices" [value]="office" class="mat-option">
+              {{office.fullAddress}}
+            </mat-option>
+          </mat-select>
+
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <!-- Date -->
+      <mat-grid-tile>
+        <mat-form-field appearance="fill" class="top-form-field">
+
+          <input placeholder="Chose date" [(ngModel)]="date" matInput [matDatepicker]="picker" class="inputs">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <div class="top-form-field">
+          table with slots
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <div class="top-form-field" align="end">
+          <button mat-raised-button color="primary" class="buttons" [mat-dialog-close]="true">Cancel</button>
+          <button mat-raised-button color="primary" class="buttons" (click)="create()" cdkFocusInitial mat-dialog-close>Save</button>
+        </div>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+
+  </form>
 </div>

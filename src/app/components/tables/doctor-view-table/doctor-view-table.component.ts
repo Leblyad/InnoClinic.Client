@@ -4,9 +4,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { delay, Subject, takeUntil } from 'rxjs';
 import { IDoctor } from 'src/app/models/doctor';
-import { DoctorService } from 'src/app/services/doctor/doctor.service';
+import { DoctorService } from 'src/app/services/doctor.service';
 import { IAppointment } from '../../../models/appointment';
-import { AppointmentService } from '../../../services/appointment/appointment.service';
+import { AppointmentService } from '../../../services/appointment.service';
 import { DoctorViewTableDataSource } from './doctor-view-table-datasource';
 
 @Component({
@@ -24,7 +24,7 @@ export class DoctorViewTableComponent implements AfterViewInit, OnInit, OnDestro
   _doctorService: DoctorService;
   loading = false;
 
-  displayedColumns = ['fullName', 'date'];
+  displayedColumns = [ 'photo', 'fullName', 'specialization' , 'date', 'office_address'];
 
   constructor(
     private doctorService: DoctorService

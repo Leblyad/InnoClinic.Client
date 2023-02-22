@@ -1,0 +1,20 @@
+.justcenter {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 1000px;
+    margin: auto;
+    margin-top: 1rem;
+  }
+
+  .justcenter p {
+    margin-top: 1rem;
+    text-align: justify;
+  }
+  
+  .justcenter img {
+    width: 50%;
+    height: auto;
+    
+  }

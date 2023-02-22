@@ -1,9 +1,5 @@
 export class Routes {
-    static appointmentRoute = 'https://localhost:7118/api/'
-    static profilesRoute = 'https://localhost:7203/api/'
-    static officeRoute = 'https://localhost:7038/api/'
-    static serviceRoute = 'https://localhost:7209/api/'
-    static documentsRoute = 'https://localhost:7003/api/'
+    static gatewayRoute = 'https://localhost:7243/gateway/'
 } 
 
 export const date = new Date().getFullYear
@@ -26,3 +22,8 @@ export enum AppointmentStatusEnum
     "Not approve" = 1
 }
 
+export enum Roles {
+    Patient = 'Patient',
+    Receptionist = 'Receptionist',
+    Doctor = 'Doctor'
+  }

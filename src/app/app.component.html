@@ -2,22 +2,40 @@
     <mat-toolbar color="primary">
         <span>InnoValidClinic</span>
         <div style="margin-left: 80%">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home" routerLink="/"></mat-icon>
             <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                 <mat-icon>menu</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item>
-                    <mat-icon>login</mat-icon>
-                    <span>Sign In</span>
-                </button>
-                <button mat-menu-item>
-                    <mat-icon>add</mat-icon>
-                    <span>Sign up</span>
-                </button>
+
+                <div [hidden]="!authService.isReceptionist()">
+                    <button mat-menu-item routerLink="/receptionist/view">
+                        <mat-icon>create</mat-icon>
+                        <span>View</span>
+                    </button>
+                </div>
+
+                <div [hidden]="!authService.isAuth$.value">
+                    <button mat-menu-item routerLink="/login" (click)="signOut()">
+                        <mat-icon>logout</mat-icon>
+                        <span>Sign out</span>
+                    </button>
+                </div>
+
+                <div [hidden]="authService.isAuth$.value">
+                    <button mat-menu-item routerLink="/login">
+                        <mat-icon>login</mat-icon>
+                        <span>Sign In</span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>add</mat-icon>
+                        <span>Sign up</span>
+                    </button>
+                </div>
+
             </mat-menu>
         </div>
     </mat-toolbar>
 </p>
 <router-outlet>
-    <app-receptionist-page></app-receptionist-page>
 </router-outlet>

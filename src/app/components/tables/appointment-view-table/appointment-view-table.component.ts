@@ -5,9 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { delay, Subject, takeUntil } from 'rxjs';
 import { AppointmentStatusEnum } from 'src/app/consts/routes';
-import { DataService } from 'src/app/services/data.service';
 import { IAppointment } from '../../../models/appointment';
-import { AppointmentService } from '../../../services/appointment/appointment.service';
+import { AppointmentService } from '../../../services/appointment.service';
 import { EditAppointmentModalComponent } from '../../modals/edit-appointment-modal/edit-appointment-modal';
 import { AppointmentViewTableDataSource } from './appointment-view-table-datasource';
 
@@ -47,7 +46,6 @@ export class AppointmentViewTableComponent implements AfterViewInit, OnInit, OnD
       .subscribe(res => {
         this.appointmentService.appointments$.next(res);
         this.dataSource = new AppointmentViewTableDataSource(this.appointmentService.appointments$.value);
-        console.log(this.appointmentService.appointments$.value);
         this.ngAfterViewInit();
         this.loading = false;
       });

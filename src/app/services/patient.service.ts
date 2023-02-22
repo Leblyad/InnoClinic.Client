@@ -8,13 +8,12 @@ import { IPatient } from 'src/app/models/patient';
   providedIn: 'root'
 })
 export class PatientService {
-
   constructor(
     private http: HttpClient
   ) { }
   
   getAll(): Observable<IPatient[]>
   {
-    return this.http.get<IPatient[]>(Routes.profilesRoute + 'patients')
+    return this.http.get<IPatient[]>(Routes.gatewayRoute + 'patients')
   }
 }

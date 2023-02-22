@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -16,7 +16,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import { ServiceViewTableComponent } from './components/tables/service-view-table/service-view-table.component';
-import { ReceptionistPageComponent } from './components/pages/receptionist-page/receptionist-page.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -30,44 +29,30 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { AppointmentViewControlPanelComponent } from './components/control-panels/appointment-view-control-panel/appointment-view-control-panel.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSelectModule} from '@angular/material/select';
+import { StartPageComponent } from './components/pages/start-page/start-page/start-page.component';
+import { LoginPageComponent } from './components/pages/login-page/login-page.component';
+import { ReceptionistModule } from './modules/receptionist/receptionist.module';
+import { LoginModule } from './modules/login/login.module';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppointmentViewTableComponent,
-    DoctorViewTableComponent,
-    ServiceViewTableComponent,
-    ReceptionistPageComponent,
-    EditAppointmentModalComponent,
-    CreateAppointmentModalComponent,
-    AppointmentViewControlPanelComponent
+    StartPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
+    ReceptionistModule,
+    LoginModule,
     MatIconModule,
-    MatButtonModule, 
-    MatTabsModule,
-    MatToolbarModule,
     MatMenuModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    MatDatepickerModule,
-    MatMomentDateModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    MatGridListModule,
-    MatSelectModule
+    MatToolbarModule,
+    MatButtonModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

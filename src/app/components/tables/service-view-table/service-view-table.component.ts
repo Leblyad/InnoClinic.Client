@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
 import { IService } from 'src/app/models/service';
-import { ServiceService } from 'src/app/services/service/service.service';
+import { ServiceService } from 'src/app/services/service.service';
 import { ServiceViewTableDataSource } from './service-view-table-datasource';
 
 @Component({

@@ -19,17 +19,32 @@ constructor(
 
   getAll(): Observable<IAppointment[]>
   {
-    return this.http.get<IAppointment[]>(Routes.appointmentRoute + 'appointments/view');
+    return this.http.get<IAppointment[]>(Routes.gatewayRoute + 'appointments/view');
   }
 
   update(id:string, appointment: IAppointmentForUpdate): Observable<IAppointment>
   {
-    return this.http.put<IAppointment>(Routes.appointmentRoute + "appointments/" + id, appointment);
+    return this.http.put<IAppointment>(Routes.gatewayRoute + "appointments/" + id, appointment);
   }
 
   create(appointment: IAppointmentForCreate): Observable<IAppointment>
   {
-    return this.http.post<IAppointment>(Routes.appointmentRoute + "appointments", appointment);
+    return this.http.post<IAppointment>(Routes.gatewayRoute + "appointments", appointment);
+  }
+
+  mapToAppaointmentForCreate(appointment: IAppointment): IAppointmentForCreate {
+    let appForUpdate = {} as IAppointmentForCreate;
+
+    appForUpdate.doctorId = appointment.doctor.id;
+    appForUpdate.officeId = appointment.officeId;
+    appForUpdate.patientId = appointment.patient.id;
+    appForUpdate.serviceId = appointment.serviceId;
+    appForUpdate.serviceName = appointment.serviceName;
+    appForUpdate.status = appointment.status;
+    appForUpdate.date = appointment.date;
+    appForUpdate.timeslots = appointment.timeslots;
+
+    return appForUpdate;
   }
 
   mapToAppaointmentForUpdate(appointment: IAppointment): IAppointmentForUpdate {

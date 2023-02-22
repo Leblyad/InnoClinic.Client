@@ -1,0 +1,27 @@
+.create-form {
+  min-width: 800px;
+  width: 100%;
+}
+
+.top-form-field
+{
+  width: 95%;
+}
+
+.inputs {
+  width: 90%;
+}
+
+.mat-autocomplete-panel {
+  border: 1px solid gray;
+}
+
+.mat-option {
+  border-top: 1px solid gray;
+}
+
+.buttons{
+  height: 30px;
+  margin-left: 10px;
+  width: 30%;
+}

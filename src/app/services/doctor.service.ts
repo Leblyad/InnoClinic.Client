@@ -15,7 +15,7 @@ constructor(
 
 getAll(): Observable<IDoctor[]>
 {
-  return this.http.get<IDoctor[]>(Routes.profilesRoute + 'doctors')
+  return this.http.get<IDoctor[]>(Routes.gatewayRoute + 'doctors')
 }
 
 }

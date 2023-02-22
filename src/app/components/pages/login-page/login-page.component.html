@@ -1,0 +1,29 @@
+<div class="example-container" align="middle" style="margin-top: 10%;">
+
+    <mat-grid-list cols="1" rowHeight="100px">
+        <form [formGroup]="loginForm" novalidate>
+            <mat-grid-tile>
+                <mat-form-field appearance="fill" class="inputs">
+                    <mat-label>Enter your email</mat-label>
+                    <input matInput placeholder="pat@example.com" formControlName="email" required class="inputs">
+                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="fill" class="inputs">
+                    <mat-label>Enter your password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" class="inputs">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <button class="buttons" mat-raised-button color="primary" (click)="submit()">Sing in</button>
+            </mat-grid-tile>
+        </form>
+    </mat-grid-list>
+</div>

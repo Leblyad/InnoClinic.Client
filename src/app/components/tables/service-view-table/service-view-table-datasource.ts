@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable, of as observableOf, merge, Subject } from 'rxjs';
 import { IService } from 'src/app/models/service';
-import { ServiceService } from 'src/app/services/service/service.service';
+import { ServiceService } from 'src/app/services/service.service';
 
 export class ServiceViewTableDataSource extends DataSource<IService> {
   data: IService[] = [];

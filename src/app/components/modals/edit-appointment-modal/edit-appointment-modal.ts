@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { IAppointment } from 'src/app/models/appointment';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AppointmentService } from 'src/app/services/appointment/appointment.service';
+import { AppointmentService } from 'src/app/services/appointment.service';
 import { Subject, takeUntil } from 'rxjs';
 import { IAppointmentForUpdate } from 'src/app/models/dto/appointment-for-update-dto';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';

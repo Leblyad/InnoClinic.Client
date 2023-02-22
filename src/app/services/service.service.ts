@@ -8,18 +8,12 @@ import { IService } from 'src/app/models/service';
   providedIn: 'root'
 })
 export class ServiceService {
-  pipe(arg0: any) {
-    throw new Error('Method not implemented.');
-  }
-
   constructor(
     private http: HttpClient
   ) {
   }
 
   getAll(): Observable<IService[]> {
-    var temp = this.http.get<IService[]>(Routes.serviceRoute + 'services')
-
-    return temp;
+    return this.http.get<IService[]>(Routes.gatewayRoute + 'services')
   }
 }
