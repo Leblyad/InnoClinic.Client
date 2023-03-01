@@ -24,7 +24,7 @@ export class AppointmentViewTableComponent implements AfterViewInit, OnInit, OnD
   ngUnsubscribe$ = new Subject();
   loading = false;
 
-  displayedColumns = ['timeslot', 'date', 'doctor', 'patient', 'phone', 'serviceName', 'status', 'approve', 'button'];
+  displayedColumns = ['time','date', 'doctor', 'patient', 'phone', 'serviceName', 'status', 'approve', 'button'];
 
   constructor(
     private appointmentService: AppointmentService,
@@ -80,5 +80,9 @@ export class AppointmentViewTableComponent implements AfterViewInit, OnInit, OnD
 
   ngOnDestroy(): void {
     this.ngUnsubscribe$.next(null);
+  }
+
+  length() : number{
+    return this.dataSource?.data?.length;
   }
 }

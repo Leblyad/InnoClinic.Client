@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core"
+import { Time } from "@angular/common"
 import { IDoctor } from "./doctor"
 import { IPatient } from "./patient"
 
@@ -9,10 +9,11 @@ export interface IAppointment {
     serviceId: string,
     officeId: string,
     date: Date,
-    timeslots: string,
+    time: Time,
     status: number,
     statusString: string,
     serviceName: string,
+    duration: number,
     doctor: IDoctor,
     patient: IPatient
 }

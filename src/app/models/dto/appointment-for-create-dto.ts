@@ -1,10 +1,13 @@
+import { Time } from "@angular/common"
+
 export interface IAppointmentForCreate {
     patientId: string,
     doctorId: string,
     serviceId: string,
     officeId: string,
     date: Date,
-    timeslots: string,
+    time: Time,
     status: number,
-    serviceName: string
+    serviceName: string,
+    duration: number
 }

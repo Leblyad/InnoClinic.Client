@@ -46,12 +46,15 @@ export class LoginPageComponent implements OnInit {
       (res: any) => {
         localStorage.setItem('accessToken', res.accessToken);
         localStorage.setItem('refreshToken', res.refreshToken);
-        this.authService.updateRoles();
+        this.authService.updateRoleAndId();
         this.authService.isAuth$.next(true);
-        
         if(this.authService.isReceptionist())
         {
           this.router.navigate(['/receptionist/view'])
+        }
+        else
+        {
+          this.router.navigate(['/patient/view'])
         }
       },
       err => {

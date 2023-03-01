@@ -1,0 +1,8 @@
+<div class="justcenter">
+  <h2>Choose free time</h2>
+</div>
+<mat-grid-list cols="6" rowHeight="30px" gutterSize="0px">
+  <mat-grid-tile *ngFor="let item of data">
+    <a mat-stroked-button [disabled]="!item.isFree" (click)="onNoClick(item.time)">{{ shortdate(item.time)|date:"HH:mm" }}</a>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -1,10 +1,9 @@
 import { Time } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, Input, OnInit, Inject } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MatDialog } from '@angular/material/dialog';
-import { map, Observable, startWith, Subject } from 'rxjs';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Observable, startWith, map } from 'rxjs';
 import { DateWithTimeSlots, TimeWithStatus } from 'src/app/models/DateWithTimeSlots';
 import { IDoctor } from 'src/app/models/doctor';
 import { IAppointmentForCreate } from 'src/app/models/dto/appointment-for-create-dto';
@@ -21,9 +20,9 @@ import { SpecializationService } from 'src/app/services/specialization.service';
 import { TimePickerComponent } from 'src/app/shared/time-picker/time-picker.component';
 
 @Component({
-  selector: 'app-create-appointment-modal',
-  templateUrl: './create-appointment-modal.component.html',
-  styleUrls: ['./create-appointment-modal.component.css'],
+  selector: 'app-create-appointment-by-patient',
+  templateUrl: './create-appointment-by-patient.component.html',
+  styleUrls: ['./create-appointment-by-patient.component.css'],
   providers: [
     {
       provide: MAT_DATE_FORMATS, useValue: {
@@ -40,12 +39,10 @@ import { TimePickerComponent } from 'src/app/shared/time-picker/time-picker.comp
     }
   ]
 })
-
-export class CreateAppointmentModalComponent implements OnInit {
+export class CreateAppointmentByPatientComponent implements OnInit {
   appForCreation: IAppointmentForCreate = {} as IAppointmentForCreate;
 
   createGroup: FormGroup = new FormGroup({
-    patientControl: new FormControl(''),
     doctorControl: new FormControl(''),
     specializationControl: new FormControl(''),
     serviceControl: new FormControl(''),
@@ -58,13 +55,13 @@ export class CreateAppointmentModalComponent implements OnInit {
   maxDate: Date = new Date(this.minDate.getTime() + 7 * 24 * 60 * 60 * 1000);
   dateWithTimeSlots: Array<DateWithTimeSlots> = [];
   choosenTimeSlots: Array<TimeWithStatus> | undefined = [];
+  placeholderService = 'Select service';
 
   isTimeDisabled = true;
   isDoctorDisabled = true;
   isDateDisabled = true;
   serviceDisable = false;
 
-  patients: IPatient[] = [];
   doctors: IDoctor[] = [];
   services: IService[] = [];
   specializations: ISpecialization[] = [];
@@ -76,10 +73,13 @@ export class CreateAppointmentModalComponent implements OnInit {
   filteredServices: Observable<IService[]> | undefined;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {
+      patient: IPatient,
+      service: IService
+    },
     private matDialog: MatDialog,
     private appoitnmentService: AppointmentService,
     doctorService: DoctorService,
-    patientService: PatientService,
     specializationService: SpecializationService,
     serviceService: ServiceService,
     officeService: OfficeService
@@ -87,11 +87,6 @@ export class CreateAppointmentModalComponent implements OnInit {
     doctorService.getAll().subscribe(res => {
       this.doctors = res;
     });
-
-    patientService.getAll().subscribe(res => {
-      this.patients = res;
-    });
-
 
     specializationService.getAll().subscribe(res => {
       this.specializations = res;
@@ -109,26 +104,20 @@ export class CreateAppointmentModalComponent implements OnInit {
 
   ngOnInit() {
     this.autocompleteData();
+    if(this.data.service)
+    {
+      this.createGroup.value.serviceControl = this.data.service;
+      this.placeholderService = this.data.service.name;
+      this.serviceDisable = true;
+    }
   }
 
   create() {
     let app = this.madeAppointmentForCreate();
-    this.appoitnmentService.create(app).subscribe(
-      () =>
-        this.appoitnmentService.getAll().subscribe(res => {
-          this.appoitnmentService.appointments$.next(res)
-        })
-    );
+    this.appoitnmentService.create(app).subscribe();
   }
 
   private autocompleteData() {
-
-    this.filteredPatients = this.createGroup.controls['patientControl'].valueChanges.pipe(
-      startWith(''),
-
-      map(value => this._filterPatients(value as string || '')),
-    );
-
     this.filteredDoctors?.subscribe(res => {
       if (res) {
 
@@ -148,7 +137,7 @@ export class CreateAppointmentModalComponent implements OnInit {
 
       map(value => this._filterSpecializations(value as string || '')),
     );
-
+    
     this.filteredServices = this.createGroup.controls['serviceControl'].valueChanges.pipe(
       startWith(''),
 
@@ -160,15 +149,6 @@ export class CreateAppointmentModalComponent implements OnInit {
     const filterValue = value;
 
     return this.doctors.filter(
-      option => (option.lastName + " " + option.firstName + " " + option.middleName)
-        .toLowerCase().includes(filterValue)
-    );
-  }
-
-  private _filterPatients(value: string): IPatient[] {
-    const filterValue = value;
-
-    return this.patients.filter(
       option => (option.lastName + " " + option.firstName + " " + option.middleName)
         .toLowerCase().includes(filterValue)
     );
@@ -200,7 +180,7 @@ export class CreateAppointmentModalComponent implements OnInit {
   madeAppointmentForCreate(): IAppointmentForCreate {
     let app = {} as IAppointmentForCreate;
 
-    let patient = this.createGroup.value.patientControl as IPatient;
+    let patient = this.data.patient as IPatient;
     let doctor = this.createGroup.value.doctorControl as IDoctor;
     let service = this.createGroup.value.serviceControl as IService;
     let office = this.createGroup.value.officeControl as IOffice;
@@ -208,12 +188,22 @@ export class CreateAppointmentModalComponent implements OnInit {
     let dateToUpdate = new Date(date);
     let time = this.createGroup.value.timeSlots as Time;
 
+    let timeSlotSize = 0;
+    if(this.data.service)
+    {
+      timeSlotSize = this.data.service.serviceCategory.timeSlotSize;
+    }
+    else
+    {
+      timeSlotSize = service.serviceCategory.timeSlotSize;
+    }
+
     app.doctorId = doctor.id;
     app.officeId = office.id;
     app.serviceId = service.id;
     app.patientId = patient.id;
-    app.status = 0;
-    app.duration = service.serviceCategory.timeSlotSize;
+    app.status = 1;
+    app.duration = timeSlotSize;
     app.date = addOneDay(dateToUpdate);
     app.serviceName = service.name;
     app.time = time;
@@ -248,7 +238,17 @@ export class CreateAppointmentModalComponent implements OnInit {
   openTimeSlotDialog() {
     let doctor = this.createGroup.value.doctorControl as IDoctor;
     let date = new Date(this.createGroup.value.dateControl as Date);
-    let timeSlotSize = (this.createGroup.value.serviceControl as IService).serviceCategory.timeSlotSize;
+    let service = this.createGroup.value.serviceControl as IService;
+
+    let timeSlotSize = 0;
+    if(this.data.service)
+    {
+      timeSlotSize = this.data.service.serviceCategory.timeSlotSize;
+    }
+    else
+    {
+      timeSlotSize = service.serviceCategory.timeSlotSize;
+    }
 
     this.appoitnmentService.getTimeSlots(doctor.id).subscribe
       (

@@ -1,3 +1,7 @@
+import { IOffice } from "./office"
+import { IPhoto } from "./photo"
+import { ISpecialization } from "./specialization"
+
 export interface IDoctor {
     id: string
     photoId: string
@@ -11,4 +15,7 @@ export interface IDoctor {
     careerStartYear: number
     status: number
     expirience: number
+    photo: IPhoto
+    office: IOffice
+    specialization: ISpecialization
 }

@@ -18,4 +18,9 @@ getAll(): Observable<IDoctor[]>
   return this.http.get<IDoctor[]>(Routes.gatewayRoute + 'doctors')
 }
 
+getView(): Observable<IDoctor[]>
+{
+  return this.http.get<IDoctor[]>(Routes.gatewayRoute + 'doctors/ViewDoctors')
+}
+
 }

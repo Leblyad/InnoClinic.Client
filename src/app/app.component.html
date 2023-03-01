@@ -8,15 +8,22 @@
             </button>
             <mat-menu #menu="matMenu">
 
-                <div [hidden]="!authService.isReceptionist()">
-                    <button mat-menu-item routerLink="/receptionist/view">
+                <div [hidden]="authService.isDoctor()">
+                    <button mat-menu-item (click)="create()">
                         <mat-icon>create</mat-icon>
+                        <span>Create</span>
+                    </button>
+                </div>
+
+                <div>
+                    <button mat-menu-item (click)="view()">
+                        <mat-icon>remove_red_eye</mat-icon>
                         <span>View</span>
                     </button>
                 </div>
 
                 <div [hidden]="!authService.isAuth$.value">
-                    <button mat-menu-item routerLink="/login" (click)="signOut()">
+                    <button mat-menu-item routerLink="**" (click)="signOut()">
                         <mat-icon>logout</mat-icon>
                         <span>Sign out</span>
                     </button>
@@ -27,7 +34,7 @@
                         <mat-icon>login</mat-icon>
                         <span>Sign In</span>
                     </button>
-                    <button mat-menu-item>
+                    <button mat-menu-item routerLink="/signup">
                         <mat-icon>add</mat-icon>
                         <span>Sign up</span>
                     </button>

@@ -24,7 +24,7 @@ export class DoctorViewTableComponent implements AfterViewInit, OnInit, OnDestro
   _doctorService: DoctorService;
   loading = false;
 
-  displayedColumns = [ 'photo', 'fullName', 'specialization' , 'date', 'office_address'];
+  displayedColumns = ['photo', 'fullName', 'specialization', 'date', 'office_address'];
 
   constructor(
     private doctorService: DoctorService
@@ -35,7 +35,7 @@ export class DoctorViewTableComponent implements AfterViewInit, OnInit, OnDestro
   ngOnInit(): void {
     this.loading = true;
 
-    this._doctorService.getAll().pipe(takeUntil(this.ngUnsubscribe$))
+    this._doctorService.getView().pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe(res => {
         this.dataSource = new DoctorViewTableDataSource(res);
         this.ngAfterViewInit();
@@ -53,5 +53,10 @@ export class DoctorViewTableComponent implements AfterViewInit, OnInit, OnDestro
 
   ngOnDestroy(): void {
     this.ngUnsubscribe$.next(null);
+  }
+
+  length() : number
+  {
+    return this.dataSource?.data?.length;
   }
 }

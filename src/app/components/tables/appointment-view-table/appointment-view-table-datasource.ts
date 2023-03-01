@@ -51,6 +51,8 @@ export class AppointmentViewTableDataSource extends DataSource<IAppointment> {
     return data.sort((a, b) => {
       const isAsc = this.sort?.direction === 'asc';
       switch (this.sort?.active) {
+        case 'date': return compare(+a.date, +b.date, isAsc);
+        case 'time': return compare(+a.time, +b.time, isAsc);
         case 'doctor':
           return compare(
             a.doctor.lastName + ' ' + a.doctor.firstName + ' ' + a.doctor.middleName,

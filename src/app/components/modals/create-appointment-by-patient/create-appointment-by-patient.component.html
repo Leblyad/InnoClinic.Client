@@ -5,27 +5,11 @@
 
     <mat-grid-list cols="2" rowHeight="70px">
 
-      <!-- Patients -->
-      <mat-grid-tile>
-        <mat-form-field class="top-form-field" appearance="fill">
-
-          <input type="text" class="inputs" placeholder="Select patient" aria-label="Number" matInput
-            formControlName="patientControl" [matAutocomplete]="patients">
-
-          <mat-autocomplete class="mat-autocomplete-panel" #patients="matAutocomplete" [displayWith]="displayPatient">
-            <mat-option class="mat-option" *ngFor="let patient of filteredPatients | async" [value]="patient">
-              {{patient.lastName + " " + patient.firstName + " " + patient.middleName}}
-            </mat-option>
-          </mat-autocomplete>
-
-        </mat-form-field>
-      </mat-grid-tile>
-
       <!-- Specializations -->
       <mat-grid-tile>
         <mat-form-field appearance="fill" class="top-form-field">
 
-          <input type="text" class="inputs" placeholder="Select specialization" aria-label="Number" matInput 
+          <input type="text" class="inputs" placeholder="Select specialization" aria-label="Number" matInput
             formControlName="specializationControl" [matAutocomplete]="specializations">
 
           <mat-autocomplete class="mat-autocomplete-panel" #specializations="matAutocomplete"
@@ -42,10 +26,10 @@
       <mat-grid-tile>
         <mat-form-field appearance="fill" class="top-form-field">
 
-          <input type="text" class="inputs" placeholder="Select service" aria-label="Number" matInput
+          <input type="text" class="inputs" [placeholder]="placeholderService" aria-label="Number" matInput [readonly]="serviceDisable"
             formControlName="serviceControl" [matAutocomplete]="services">
 
-          <mat-autocomplete class="mat-autocomplete-panel" #services="matAutocomplete" [displayWith]="displayService">
+          <mat-autocomplete class="mat-autocomplete-panel" #services="matAutocomplete" [displayWith]="displayService" >
             <mat-option class="mat-option" *ngFor="let service of filteredServices | async" [value]="service">
               {{service.name}}
             </mat-option>
@@ -103,9 +87,6 @@
             <mat-icon>access_time</mat-icon>
           </a>
         </mat-form-field>
-      </mat-grid-tile>
-
-      <mat-grid-tile>
       </mat-grid-tile>
 
       <mat-grid-tile>

@@ -34,6 +34,9 @@ import { LoginPageComponent } from './components/pages/login-page/login-page.com
 import { ReceptionistModule } from './modules/receptionist/receptionist.module';
 import { LoginModule } from './modules/login/login.module';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { TimePickerCustomModule } from './shared/time-picker/time-picker.module';
+import { NotRegPatientModule } from './modules/not-reg-patient/not-reg-patient.module';
+import { SignupModule } from './modules/signup/signup.module';
 
 @NgModule({
   declarations: [
@@ -46,11 +49,14 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     ReceptionistModule,
+    NotRegPatientModule,
     LoginModule,
     MatIconModule,
     MatMenuModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    TimePickerCustomModule,
+    SignupModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

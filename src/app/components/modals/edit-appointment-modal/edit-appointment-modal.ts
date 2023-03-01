@@ -32,7 +32,7 @@ export class EditAppointmentModalComponent implements OnInit, OnDestroy {
   ngUnsubscribe$ = new Subject();
   appForCreation: IAppointmentForUpdate = {} as any;
   date: Date = {} as Date;
-  timeslots: string = '';
+  duration: number = 10;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: IAppointment,
@@ -43,7 +43,7 @@ export class EditAppointmentModalComponent implements OnInit, OnDestroy {
 
   updateAppointment() {
     this.mapToAppaointmentForCreation(this.data);
-    if (this.data && this.timeslots) {
+    if (this.data && this.duration) {
       this._appointmentService.update(this.data.id, this.appForCreation).pipe(takeUntil(this.ngUnsubscribe$))
         .subscribe();
     }
@@ -58,10 +58,10 @@ export class EditAppointmentModalComponent implements OnInit, OnDestroy {
 
   mapToAppaointmentForCreation(appointment: IAppointment): void {
     let dateForUpdate = new Date();
-    if (this.data && this.timeslots) {
+    if (this.data && this.duration) {
       dateForUpdate = new Date(this.date);
       appointment.date = this.date;
-      appointment.timeslots = this.timeslots;
+      appointment.duration = this.duration;
     }
 
     this.appForCreation.doctorId = appointment.doctor.id;
@@ -71,7 +71,12 @@ export class EditAppointmentModalComponent implements OnInit, OnDestroy {
     this.appForCreation.serviceName = appointment.serviceName;
     this.appForCreation.status = appointment.status;
     this.appForCreation.date = addOneDay(dateForUpdate);
-    this.appForCreation.timeslots = appointment.timeslots;
+    this.appForCreation.duration = appointment.duration;
+  }
+
+  getDate() : Date
+  {
+    return this.data?.date;
   }
 }
 

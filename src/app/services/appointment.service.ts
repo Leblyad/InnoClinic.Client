@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Routes } from 'src/app/consts/routes';
 import { IAppointmentForUpdate } from 'src/app/models/dto/appointment-for-update-dto';
 import { IAppointmentForCreate } from 'src/app/models/dto/appointment-for-create-dto';
+import { DateWithTimeSlots } from '../models/DateWithTimeSlots';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,12 @@ constructor(
   {
     return this.http.get<IAppointment[]>(Routes.gatewayRoute + 'appointments/view');
   }
+
+  getTimeSlots(doctorId: string): Observable<Array<DateWithTimeSlots>>
+  {
+    return this.http.get<Array<DateWithTimeSlots>>(Routes.gatewayRoute + 'appointments/TimeSlots/' + doctorId);
+  }
+
 
   update(id:string, appointment: IAppointmentForUpdate): Observable<IAppointment>
   {
@@ -42,7 +49,7 @@ constructor(
     appForUpdate.serviceName = appointment.serviceName;
     appForUpdate.status = appointment.status;
     appForUpdate.date = appointment.date;
-    appForUpdate.timeslots = appointment.timeslots;
+    appForUpdate.duration = appointment.duration;
 
     return appForUpdate;
   }
@@ -57,7 +64,7 @@ constructor(
     appForUpdate.serviceName = appointment.serviceName;
     appForUpdate.status = appointment.status;
     appForUpdate.date = appointment.date;
-    appForUpdate.timeslots = appointment.timeslots;
+    appForUpdate.duration = appointment.duration;
 
     return appForUpdate;
   }

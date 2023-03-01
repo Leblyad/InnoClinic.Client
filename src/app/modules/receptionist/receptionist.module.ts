@@ -60,10 +60,8 @@ import { ReceptionistRoutes } from './receptionist.routng';
     ReceptionistComponent,
     AppointmentViewTableComponent,
     AppointmentViewControlPanelComponent,
-    DoctorViewTableComponent,
-    ServiceViewTableComponent,
-    CreateAppointmentModalComponent,
-    EditAppointmentModalComponent
+    EditAppointmentModalComponent,
+    CreateAppointmentModalComponent
   ]
 })
 export class ReceptionistModule { }

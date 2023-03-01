@@ -1,3 +1,26 @@
-<p>
-  not-reg-patient works!
-</p>
+<mat-tab-group>
+
+  <mat-tab label="Doctors">
+    <app-doctor-view-table></app-doctor-view-table>
+  </mat-tab>
+
+  <mat-tab label="Services">
+
+    <mat-tab-group>
+
+      <mat-tab label="Consultations">
+        <app-service-view-table categoty="Consultations"></app-service-view-table>
+      </mat-tab>
+
+      <mat-tab label="Diagnostics">
+        <app-service-view-table categoty="Diagnostics"></app-service-view-table>
+      </mat-tab>
+
+      <mat-tab label="Analyses">
+        <app-service-view-table categoty="Analyses"></app-service-view-table>
+      </mat-tab>
+
+    </mat-tab-group>
+
+  </mat-tab>
+</mat-tab-group>
