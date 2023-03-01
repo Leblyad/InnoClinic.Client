@@ -22,7 +22,7 @@
             </mat-grid-tile>
 
             <mat-grid-tile>
-                <button class="buttons" mat-raised-button color="primary" (click)="submit()">Sing in</button>
+                <button class="buttons" mat-raised-button color="primary" [disabled]="loginForm.invalid" (click)="submit()">Sing in</button>
             </mat-grid-tile>
         </form>
     </mat-grid-list>

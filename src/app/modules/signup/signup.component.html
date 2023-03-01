@@ -1,91 +1,106 @@
-<div class="example-container" align="middle" style="margin-top: 10%;">
+<div class="example-container" align="middle">
+  <mat-stepper #stepper>
+    <mat-step [editable]="false">
+    <mat-grid-list cols="1" rowHeight="100px">
+      <form [formGroup]="signupForm" novalidate>
+        <ng-template matStepLabel>Fill out user info</ng-template>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill" class="inputs">
+            <mat-label>Enter your email</mat-label>
+            <input matInput placeholder="pat@example.com" formControlName="email" required class="inputs">
+            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
 
-  <mat-grid-list cols="1" rowHeight="100px">
-    <form [formGroup]="signupForm" novalidate>
-      <mat-grid-tile>
-        <mat-form-field appearance="fill" class="inputs">
-          <mat-label>Enter your email</mat-label>
-          <input matInput placeholder="pat@example.com" formControlName="email" required class="inputs">
-          <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
-      </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill" class="inputs">
+            <mat-label>Enter your password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" class="inputs">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+        </mat-grid-tile>
 
-      <mat-grid-tile>
-        <mat-form-field appearance="fill" class="inputs">
-          <mat-label>Enter your password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" class="inputs">
-          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-        </mat-form-field>
-      </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill" class="inputs">
+            <mat-label class="inputs">Repeat your password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" class="inputs">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+        </mat-grid-tile>
 
-      <mat-grid-tile>
-        <mat-form-field appearance="fill" class="inputs">
-          <mat-label class="inputs">Repeat your password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" class="inputs">
-          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-        </mat-form-field>
-      </mat-grid-tile>
+        <mat-grid-tile>
+          <div>
+            <button mat-button matStepperNext mat-raised-button color="primary" class="buttons" [disabled]="signupForm.invalid">Next</button>
+          </div>
+        </mat-grid-tile>
+      </form>
+      </mat-grid-list>
+      </mat-step>
 
-      <mat-grid-tile>
-        <mat-form-field class="inputs">
-          <mat-label>Photo</mat-label>
-          <input type="text" matInput readonly name="photo" (click)="fileInput.click()" formControlName="photo" />
-          <button type="button" mat-icon-button matSuffix (click)="fileInput.click()">
-            <mat-icon>arrow_upward</mat-icon>
-          </button>
-          <button type="button" mat-icon-button matSuffix
-            (click)="clearFileSelected()"><mat-icon>clear</mat-icon></button>
-          <input hidden (change)="onFileSelected()" accept=".jpg,.jpeg,.png" #fileInput type="file" id="file" />
-        </mat-form-field>
-      </mat-grid-tile>
+      <mat-step [editable]="false">
+      <mat-grid-list cols="1" rowHeight="100px">
+        <form [formGroup]="accountForm" novalidate>
+          <ng-template matStepLabel>Fill out account info</ng-template>
+        <mat-grid-tile>
+          <mat-form-field class="inputs">
+            <mat-label>Photo</mat-label>
+            <input type="text" matInput readonly name="photo" (click)="fileInput.click()" formControlName="photo" />
+            <button type="button" mat-icon-button matSuffix (click)="fileInput.click()">
+              <mat-icon>arrow_upward</mat-icon>
+            </button>
+            <button type="button" mat-icon-button matSuffix (click)="clearFileSelected()"><mat-icon>clear</mat-icon></button>
+            <input hidden (change)="onFileSelected()" accept=".jpg,.jpeg,.png" #fileInput type="file" id="file" />
+          </mat-form-field>
+        </mat-grid-tile>
 
-      <mat-grid-tile>
-        <mat-form-field class="inputs">
-          <mat-label>First name</mat-label>
-          <input type="text" name="firstName" matInput required formControlName="firstName" />
-        </mat-form-field>
-      </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field class="inputs">
+            <mat-label>First name</mat-label>
+            <input type="text" name="firstName" matInput formControlName="firstName" />
+          </mat-form-field>
+        </mat-grid-tile>
 
-      <mat-grid-tile>
-        <mat-form-field class="inputs">
-          <mat-label>Last name</mat-label>
-          <input type="text" name="lastName" matInput formControlName="lastName" />
-        </mat-form-field>
-      </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field class="inputs">
+            <mat-label>Last name</mat-label>
+            <input type="text" name="lastName" matInput formControlName="lastName" />
+          </mat-form-field>
+        </mat-grid-tile>
 
-      <mat-grid-tile>
-        <mat-form-field class="inputs">
-          <mat-label>Middle name</mat-label>
-          <input type="text" name="middleName" matInput formControlName="middleName" />
-        </mat-form-field>
-      </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field class="inputs">
+            <mat-label>Middle name</mat-label>
+            <input type="text" name="middleName" matInput formControlName="middleName" />
+          </mat-form-field>
+        </mat-grid-tile>
 
-      <mat-grid-tile>
-        <mat-form-field class="inputs">
-          <mat-label>Telephone</mat-label>
-          <input type="phone" matInput placeholder="555-555-1234" class="inputs">
-          <mat-icon matSuffix>mode_edit</mat-icon>
-        </mat-form-field>
-      </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field class="inputs">
+            <mat-label>Telephone</mat-label>
+            <input type="phone" formControlName="phone" matInput placeholder="555-555-1234" class="inputs">
+            <mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
+        </mat-grid-tile>
 
-      <mat-grid-tile>
-        <mat-form-field appearance="fill" class="inputs">
-          <input placeholder="Chose date" name="date" formControlName="dateControl" matInput
-            [matDatepicker]="picker">
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill" class="inputs">
+            <input placeholder="Chose date" name="date" formControlName="dateControl" matInput [matDatepicker]="picker">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
 
-      <mat-grid-tile>
-        <button class="buttons" mat-raised-button color="primary">Sing up</button>
-      </mat-grid-tile>
-    </form>
-  </mat-grid-list>
+        <mat-grid-tile>
+          <button class="buttons" mat-raised-button color="primary" [disabled]="signupForm.invalid" (click)="createAccount()">Sing up</button>
+        </mat-grid-tile>
+      </form>
+    </mat-grid-list>
+      </mat-step>
+  </mat-stepper>
 </div>

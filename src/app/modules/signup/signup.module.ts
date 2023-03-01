@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { SignRoutes } from './signup.routing';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import {MatStepperModule} from '@angular/material/stepper';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     SignRoutes,
     MatInputModule,
     MatDatepickerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatStepperModule
   ],
   declarations: [SignupComponent]
 })
