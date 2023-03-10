@@ -30,6 +30,9 @@ import { ServiceViewTableComponent } from 'src/app/components/tables/service-vie
 import { CreateAppointmentModalComponent } from 'src/app/components/modals/create-appointment-modal/create-appointment-modal.component';
 import { EditAppointmentModalComponent } from 'src/app/components/modals/edit-appointment-modal/edit-appointment-modal';
 import { ReceptionistRoutes } from './receptionist.routng';
+import { DoctorViewByReceptionistComponent } from 'src/app/components/tables/doctor-view-by-receptionist/doctor-view-by-receptionist.component';
+import { CreateDoctorPageComponent } from 'src/app/components/pages/create-doctor-page/create-doctor-page.component';
+import { DatepickerOnlyYearDirective } from 'src/app/shared/time-picker/year-directive';
 
 @NgModule({
   imports: [
@@ -61,7 +64,10 @@ import { ReceptionistRoutes } from './receptionist.routng';
     AppointmentViewTableComponent,
     AppointmentViewControlPanelComponent,
     EditAppointmentModalComponent,
-    CreateAppointmentModalComponent
+    CreateAppointmentModalComponent,
+    DoctorViewByReceptionistComponent,
+    CreateDoctorPageComponent,
+    DatepickerOnlyYearDirective
   ]
 })
 export class ReceptionistModule { }

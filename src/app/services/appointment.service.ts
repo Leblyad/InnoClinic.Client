@@ -28,6 +28,11 @@ constructor(
     return this.http.get<Array<DateWithTimeSlots>>(Routes.gatewayRoute + 'appointments/TimeSlots/' + doctorId);
   }
 
+  getAppointmentsByDoctor(doctorId: string) : Observable<IAppointment[]>
+  {
+    return this.http.get<IAppointment[]>(Routes.gatewayRoute + 'appointments/Doctor/' + doctorId);
+  }
+
 
   update(id:string, appointment: IAppointmentForUpdate): Observable<IAppointment>
   {

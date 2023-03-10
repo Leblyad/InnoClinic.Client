@@ -7,6 +7,8 @@ import { IPatient } from '../models/patient';
 import { IPatientForCreation } from '../models/dto/patient-for-creation-dto';
 import { IPhoto } from '../models/photo';
 import { Router } from '@angular/router';
+import { IDoctorForCreation } from '../models/dto/doctor-for-creation-dto';
+import { IDoctor } from '../models/doctor';
 
 @Injectable({
   providedIn: 'root'
@@ -76,9 +78,6 @@ export class AuthenticationService {
                 DateOfBirth: patient.dateOfBirth,
                 AccountId: patient.accountId
               }
-
-              console.log(patient);
-
               this.httpClient.post(Routes.gatewayRoute + 'patients', patientProfile).subscribe
                 (
                   () => this.router.navigate(['/patient/view'])
@@ -87,8 +86,60 @@ export class AuthenticationService {
         }));
   }
 
+  CreateDoctor(doctor: IDoctorForCreation) {
+    let user =
+    {
+      FirstName: doctor.firstName,
+      LastName: doctor.lastName,
+      UserName: doctor.email,
+      Password: doctor.password,
+      Email: doctor.email,
+      phoneNumber: doctor.phoneNumber,
+      role: 'Doctor'
+    };
+
+    this.httpClient.post(Routes.authRoute + 'authentication/receptionist', user).subscribe(
+      (res: any) => {
+          debugger
+          doctor.accountId = res.id;
+          let photo =
+          {
+            FileName: doctor.photoName,
+            Value: doctor.photo
+          }
+          this.httpClient.post<IPhoto>(Routes.gatewayRoute + 'photo', photo).subscribe(
+            res => {
+              doctor.photoId = res.id
+              let doctorProfile =
+              {
+                PhotoId: doctor.photoId,
+                FirstName: doctor.firstName,
+                LastName: doctor.lastName,
+                MiddleName: doctor.middleName,
+                PhoneNumber: doctor.phoneNumber,
+                DateOfBirth: doctor.dateOfBirth,
+                Email: doctor.email,
+                SpecializationId: doctor.specializationId,
+                OfficeId: doctor.officeId,
+                CareerStartYear: doctor.careerStartYear,
+                Status: doctor.status,
+                AccountId: doctor.accountId
+              }
+
+              this.httpClient.post(Routes.gatewayRoute + 'doctors', doctorProfile).subscribe
+                (
+                  () => this.router.navigate(['/receptionist/view'])
+                )
+            })
+        });
+  }
+
   getPatient(): Observable<IPatient> {
     return this.httpClient.get<IPatient>(Routes.gatewayRoute + 'patients/account/' + this.id$.value)
+  }
+
+  getDoctor(): Observable<IDoctor> {
+    return this.httpClient.get<IDoctor>(Routes.gatewayRoute + 'doctors/account/' + this.id$.value)
   }
 
   SignOut() {

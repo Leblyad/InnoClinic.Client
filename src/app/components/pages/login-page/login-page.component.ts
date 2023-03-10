@@ -52,6 +52,10 @@ export class LoginPageComponent implements OnInit {
         {
           this.router.navigate(['/receptionist/view'])
         }
+        else if(this.authService.isDoctor())
+        {
+          this.router.navigate(['/doctor/view'])
+        }
         else
         {
           this.router.navigate(['/patient/view'])

@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginPageComponent } from './components/pages/login-page/login-page.component';
 import { StartPageComponent } from './components/pages/start-page/start-page/start-page.component';
 import { AuthGuard } from './guards/auth.guard';
-import { NotAuthGuard } from './guards/not-auth.guard';
-import { ReceptionistModule } from './modules/receptionist/receptionist.module';
 
 const routes: Routes = [
   {
     path: 'receptionist', canActivate: [AuthGuard], data: { Roles: ['Receptionist'] },
     loadChildren: () => import('./modules/receptionist/receptionist.module').then(m => m.ReceptionistModule)
+  },
+  {
+    path: 'doctor', canActivate: [AuthGuard], data: { Roles: ['Doctor'] },
+    loadChildren: () => import('./modules/doctor/doctor.module').then(m => m.DoctorModule)
   },
   {
     path: 'patient',

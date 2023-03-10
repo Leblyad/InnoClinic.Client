@@ -33,7 +33,7 @@ export class AppComponent {
       this.router.navigate(['/receptionist/view']);
 
     if (this.authService.isDoctor())
-      this.router.navigate(['**']);
+      this.router.navigate(['/doctor/view']);
   }
 
   create() {
